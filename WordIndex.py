@@ -4,17 +4,31 @@
 #Assignment:
 
 def main():
-  textFile = open("fish.txt", 'r')
+    textFile = open("fish.txt", 'r')
   
-  words = {} #create an empty dictionary
-  
-  
-  print ("fish" in words) #is a word already in the dictionary?
-  words["fish"] = [2]     #add a list to the dictionary
-  print ("fish" in words) #is the word there now?
-  words["fish"].append(5) #add to an existing list
-  print(words)
+    words = {}
+
+    print("fish" in words)
+    words["fish"] = [2]
+    print("fish" in words)
+    words["fish"].append(5)
+    print(words)
+    
+    for line_number, line in enumerate(textFile, start=1):
+        for word in line.split():
+            word = word.lower().strip()
+            if word in words:
+                words[word].append(line_number)
+            else:
+                words[word] = [line_number]
+    
+    textFile.close()
+    
+    print("\nWord Index:")
+    for word, line_numbers in sorted(words.items()):
+        print(f"{word}: {line_numbers}")
 
 
 if __name__ == '__main__':
-  main()
+    main()
+
